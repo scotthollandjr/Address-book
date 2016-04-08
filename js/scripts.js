@@ -81,5 +81,6 @@ $(document).ready(function() {
     $("input.new-city").val("");
     $("input.new-state").val("");
 
+    $(".addon").hide();
   });
 });
