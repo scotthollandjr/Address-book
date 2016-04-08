@@ -5,10 +5,11 @@ function Contact(first, last) {
   this.addresses = [];
 }
 
-function Address(street, city, state) {
+function Address(street, city, state, toop) {
   this.street = street;
   this.city = city;
   this.state = state;
+  this.toop = toop;
 }
 
 Contact.prototype.fullName = function() {
@@ -16,14 +17,14 @@ Contact.prototype.fullName = function() {
 }
 
 Address.prototype.fullAddress = function() {
-  return this.street + ", " + this.city + ", " + this.state;
+  return this.street + ", " + this.city + ", " + this.state + " (" + this.toop + ")";
 }
 
 // user interface logic
 $(document).ready(function() {
 
   $("#add-address").click(function() {
-    $("#new-addresses").append('<div class="new-address">' +
+    $("#new-addresses").append('<div class="new-address addon">' +
                                  '<div class="form-group">' +
                                    '<label for="new-street">Street</label>' +
                                    '<input type="text" class="form-control new-street">' +
@@ -35,6 +36,12 @@ $(document).ready(function() {
                                  '<div class="form-group">' +
                                    '<label for="new-state">State</label>' +
                                    '<input type="text" class="form-control new-state">' +
+                                 '</div>' +
+                                 '<div class="form-group">' +
+                                   '<label for="address-type">Address Type</label><br>' +
+                                   '<input type="radio" class="address-type" value="Home"> Home<br>' +
+                                   '<input type="radio" class="address-type" value="Work"> Work<br>' +
+                                   '<input type="radio" class="address-type" value="Other"> Other<br>' +
                                  '</div>' +
                                '</div>');
   });
@@ -50,7 +57,8 @@ $(document).ready(function() {
       var inputtedStreet = $(this).find("input.new-street").val();
       var inputtedCity = $(this).find("input.new-city").val();
       var inputtedState = $(this).find("input.new-state").val();
-      var newAddress = new Address(inputtedStreet, inputtedCity, inputtedState)
+      var inputtedType = $(this).find("input[type=radio]:checked").val();
+      var newAddress = new Address(inputtedStreet, inputtedCity, inputtedState, inputtedType)
       newContact.addresses.push(newAddress)
     });
 
